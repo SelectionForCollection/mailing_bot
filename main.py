@@ -41,7 +41,7 @@ def mailing_channels(message):
     os.system(r' >channels_names.txt')
     file = open('channels_names.txt', 'w')
     for channel in CHANNEL_NAMES:
-        file.write(channel)
+        file.write(channel + '\n')
     file.close()
 
 
