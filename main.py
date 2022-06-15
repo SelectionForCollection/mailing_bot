@@ -21,7 +21,7 @@ def check_channels(message):
             except Exception:
                 response += "В " + channel + " я НЕ админ, это не гуд\n"
                 CHANNEL_NAMES.remove(channel)
-        bot.send_message(message.chat.id, response + '\n\nКаналы, где я не админ, мне придется удалить из списка подключенных каналов. Рекомендую отправить /check_channels еще раз.')
+        bot.send_message(message.chat.id, response + '\n\nКаналы, где я не админ, в список подключенных каналов не попадают. Рекомендую отправить /mailing_channels.')
     else:
         bot.send_message(message.chat.id, 'Бот пока не подключени ни к одному каналу')
 
