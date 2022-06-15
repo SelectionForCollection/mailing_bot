@@ -11,16 +11,19 @@ def start(message):
 @bot.message_handler(commands=['check_channels'])
 def check_channels(message):
     response = ""
-    for channel in CHANNEL_NAMES:
-        try:
-            admins = bot.get_chat_administrators(channel)
-            for admin in admins:
-                if admin.user.id == BOT_ID:
-                    response += "В " + channel + " я админ, все ок\n"
-        except Exception:
-            response += "В " + channel + " я НЕ админ, это не гуд\n"
-            CHANNEL_NAMES.remove(channel)
-    bot.send_message(message.chat.id, response)
+    if len(CHANNEL_NAMES) != 0:
+        for channel in CHANNEL_NAMES:
+            try:
+                admins = bot.get_chat_administrators(channel)
+                for admin in admins:
+                    if admin.user.id == BOT_ID:
+                        response += "В " + channel + " я админ, все ок\n"
+            except Exception:
+                response += "В " + channel + " я НЕ админ, это не гуд\n"
+                CHANNEL_NAMES.remove(channel)
+        bot.send_message(message.chat.id, response)
+    else:
+        bot.send_message(message.chat.id, 'Бот пока не подключени ни к одному каналу')
 
 
 @bot.message_handler(commands=['mailing_channels'])
