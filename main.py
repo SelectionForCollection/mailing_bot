@@ -9,17 +9,19 @@ CHANNEL_REGEXP = re.compile(r'@[a-zA-Z][a-zA-z_]{,31}')
 
 CHANNEL_NAMES = []
 file = open('channels_names.txt', 'r')
-CHANNEL_NAMES = file.read().split('\n')
+CHANNEL_NAMES = file.read().split('\n') if len(file.read()) > 0 else []
 file.close()
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, 'Привет, ' + message.chat.first_name + '.')
 
+
 @bot.message_handler(commands=['check_channels'])
 def check_channels(message):
     response = ""
-    if len(CHANNEL_NAMES) != 0:
+    if CHANNEL_NAMES != []:
         for channel in CHANNEL_NAMES:
             try:
                 admins = bot.get_chat_administrators(channel)
@@ -29,7 +31,8 @@ def check_channels(message):
             except Exception:
                 response += "В " + channel + " я НЕ админ, это не гуд\n"
                 CHANNEL_NAMES.remove(channel)
-        bot.send_message(message.chat.id, response + '\n\nКаналы, где я не админ, в список подключенных каналов не попадают. Рекомендую отправить\n/mailing_channels.')
+                continue
+        bot.send_message(message.chat.id, response + '\n\nКаналы, где я не админ, в список подключенных каналов не попадают. Рекомендую отправить\n/mailing_channels')
     else:
         bot.send_message(message.chat.id, 'Бот пока не подключени ни к одному каналу')
 
@@ -52,7 +55,7 @@ def helper_add_mailing_channel(message):
 def add_mailing_channel(message):
     buff = message.text.split('\n')
     for el in buff:
-        # el = el.replace(' ', '')
+        el = el.replace(' ', '')
         if CHANNEL_REGEXP.match(el):
             CHANNEL_NAMES.append(el)
     bot.send_message(message.chat.id, 'Распознаны каналы: ' + str(CHANNEL_NAMES) + '\n\nРекомендуется выполнить проверку\n/check_channels')
