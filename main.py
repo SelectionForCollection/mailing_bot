@@ -29,7 +29,7 @@ def check_channels(message):
             except Exception:
                 response += "В " + channel + " я НЕ админ, это не гуд\n"
                 CHANNEL_NAMES.remove(channel)
-        bot.send_message(message.chat.id, response + '\n\nКаналы, где я не админ, в список подключенных каналов не попадают. Рекомендую отправить /mailing_channels.')
+        bot.send_message(message.chat.id, response + '\n\nКаналы, где я не админ, в список подключенных каналов не попадают. Рекомендую отправить\n/mailing_channels.')
     else:
         bot.send_message(message.chat.id, 'Бот пока не подключени ни к одному каналу')
 
@@ -52,10 +52,10 @@ def helper_add_mailing_channel(message):
 def add_mailing_channel(message):
     buff = message.text.split('\n')
     for el in buff:
-        el = el.replace(' ', '')
+        # el = el.replace(' ', '')
         if CHANNEL_REGEXP.match(el):
             CHANNEL_NAMES.append(el)
-    bot.send_message(message.chat.id, 'Распознаны каналы: ' + str(CHANNEL_NAMES) + '\n\nРекомендуется выполнить проверку /check_channels')
+    bot.send_message(message.chat.id, 'Распознаны каналы: ' + str(CHANNEL_NAMES) + '\n\nРекомендуется выполнить проверку\n/check_channels')
 
 
 @bot.message_handler(commands=['new_mailing'])
