@@ -9,8 +9,7 @@ CHANNEL_REGEXP = re.compile(r'@[a-zA-Z][a-zA-z_]{,31}')
 
 CHANNEL_NAMES = []
 file = open('channels_names.txt', 'r')
-for line in file:
-    CHANNEL_NAMES = file.read().split('@')
+CHANNEL_NAMES = file.read().split('@')
 file.close()
 
 @bot.message_handler(commands=['start'])
