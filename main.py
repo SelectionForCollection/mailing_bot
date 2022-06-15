@@ -38,6 +38,11 @@ def check_channels(message):
 @bot.message_handler(commands=['mailing_channels'])
 def mailing_channels(message):
     bot.send_message(message.chat.id, 'Подключенные каналы: ' + str(CHANNEL_NAMES))
+    os.system(r' >channels_names.txt')
+    file = open('channels_names.txt', 'w')
+    for channel in CHANNEL_NAMES:
+        file.write(channel)
+    file.close()
 
 
 @bot.message_handler(commands=['add_mailing_channel'])
@@ -77,11 +82,5 @@ def remail(message):
             case 'sticker':
                 bot.send_sticker(channel, message.sticker.file_id)
     bot.send_message(message.chat.id, 'Отправил, епта')
-
-os.system(r' >channels_names.txt.txt')
-file = open('channels_names.txt', 'w')
-for channel in CHANNEL_NAMES:
-    file.write(channel)
-file.close()
 
 bot.polling(none_stop=True)
