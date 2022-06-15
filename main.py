@@ -1,8 +1,17 @@
 import telebot
+import re
+import os
+
 
 bot = telebot.TeleBot('5502039945:AAFf6awspHw9bRMYk5PqObtCPQx6Pg2GdAs')
 BOT_ID = 5502039945
+CHANNEL_REGEXP = re.compile(r'@[a-zA-Z][a-zA-z_]{,31}')
+
 CHANNEL_NAMES = []
+file = open('channels_names.txt', 'r')
+for line in file:
+    CHANNEL_NAMES.append(line)
+file.close()
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -39,7 +48,9 @@ def helper_add_mailing_channel(message):
 def add_mailing_channel(message):
     buff = message.text.split('\n')
     for el in buff:
-        CHANNEL_NAMES.append(el)
+        el = el.replace(' ', '')
+        if CHANNEL_REGEXP.match(el):
+            CHANNEL_NAMES.append(el)
     bot.send_message(message.chat.id, 'Распознаны каналы: ' + str(CHANNEL_NAMES) + '\n\nРекомендуется выполнить проверку /check_channels')
 
 
@@ -66,5 +77,11 @@ def remail(message):
             case 'sticker':
                 bot.send_sticker(channel, message.sticker.file_id)
     bot.send_message(message.chat.id, 'Отправил, епта')
+
+os.system(r' >file.txt')
+file = open('channels_names.txt', 'w')
+for channel in CHANNEL_NAMES:
+    file.write(channel)
+file.close()
 
 bot.polling(none_stop=True)
