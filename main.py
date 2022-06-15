@@ -78,7 +78,7 @@ def remail(message):
                 bot.send_sticker(channel, message.sticker.file_id)
     bot.send_message(message.chat.id, 'Отправил, епта')
 
-os.system(r' >file.txt')
+os.system(r' >channels_names.txt.txt')
 file = open('channels_names.txt', 'w')
 for channel in CHANNEL_NAMES:
     file.write(channel)
