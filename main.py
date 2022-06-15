@@ -40,7 +40,7 @@ def add_mailing_channel(message):
     buff = message.text.split('\n')
     for el in buff:
         CHANNEL_NAMES.append(el)
-    bot.send_message(message.chat.id, 'Подключенные каналы: ' + str(CHANNEL_NAMES))
+    bot.send_message(message.chat.id, 'Распознаны каналы: ' + str(CHANNEL_NAMES) + '\n\nРекомендуется выполнить проверку /check_channels')
 
 
 @bot.message_handler(commands=['new_mailing'])
